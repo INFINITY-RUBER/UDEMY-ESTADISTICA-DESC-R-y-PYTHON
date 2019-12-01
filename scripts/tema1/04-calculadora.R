@@ -1,4 +1,4 @@
-2*(3+5/2)
+2*(3+(5/2))
 
 2*((3+5)/2)
 
@@ -14,8 +14,9 @@
 
 2^(-4)
 
+#cuantas semanas hay en 725 dias?
 725%/%7
-
+# y sobran dias de estas semanas? = mod %%
 725%%7
 # D = d * q + r
 # r = D - d * q
@@ -43,13 +44,13 @@ NaN
 
 0/0
 
-2^50# = 1.1259e+15 = 1125900000000000 
+2^50  # = 1.1259e+15 = 1125900000000000 
 
 2 ^(-15) # 3.051758e-05 = 0.00003051758
 
 c(2^30, 2^(-15), 1, 2, 3/2)
 
-
+#RAIZ CUADRADA
 sqrt(25)
 
 exp(1)
@@ -69,6 +70,8 @@ factorial(4)
 
 factorial(0)
 
+#COEFICIENTE BINOMIAL:
+# SI TENGO 5 PLATOS Y QUIERO COMER 3 DE ELLOS, DE CUANTAS FORMAS ME LO PUEDO COMER?
 choose(5, 3)
 
 choose(3,5)
@@ -79,9 +82,15 @@ log(4^6, 4)
 
 choose(5,2)
 
+
+#TRIGONOMETRIA EN RADIANES
+
 sin(60*pi/180)
 
+cos(60) # FORMA INCORRECTA por que da negativo
 cos(60*pi/180)
+
+?sin #ayuda de informacion
 
 sinpi(1/2) # = sin (pi/2)
 
@@ -97,12 +106,13 @@ asin(5) #arc sin x in [-1,1]
 
 acos(-8)
 
-print(sqrt(2),10)
-round(sqrt(2), 3)
-floor(sqrt(2))
-ceiling(sqrt(2))
-trunc(sqrt(2))
+print(sqrt(2),10) #1.414213562
+round(sqrt(2), 3) #1.414
+floor(sqrt(2)) #1
+ceiling(sqrt(2)) #2
+trunc(sqrt(2)) #1
 
+# redondeo
 sqrt(2)^2-2
 
 round(sqrt(2), 4)^2
@@ -110,10 +120,10 @@ round(sqrt(2), 4)^2
 2^50
 print(2^50, 15)
 print(2^50, 2)
-print(pi, 22)
+print(pi, 22) # R se equivoca despues de 16 digitos
 #3.141592653589793115998
 #3.141592653589793238462
-
+round(1.15,1)
 round(1.25,1)
 round(1.35,1)
 round(sqrt(2),0)
@@ -127,6 +137,7 @@ floor(-3.45)
 ceiling(-3.45)
 trunc(-3.45)
 
+# VARIABLES Y FUNCIONES
 
 x = (pi^2)/2
 x
@@ -152,10 +163,11 @@ x = x^2
 
 x = sqrt(x)
 
-## Función f(x) = x^3 - (3^x)* sen(x)
+##### Función f(x) = x^3 - (3^x)* sen(x) ##########
+
 f = function(x) {
   x^3 - (3^x) * sin(x)
-}
+  }
 
 f(4) # 4^3 - 3^4 * sin(4)
 f(5)
@@ -188,12 +200,15 @@ suma5 <- function(numero){
 
 suma5(3)
 
+# Listar la variables creadas
 ls()
 
+# Borrar fuciones creadas
 rm(product)
 
 ls()
 
+# Borrar Todas las fuciones creadas
 rm(list = ls())
 
 class(3+2i)
