@@ -173,6 +173,7 @@ f(4) # 4^3 - 3^4 * sin(4)
 f(5)
 f(pi/2)
 
+
 suma1 <- function(t){
   t + 1
 }
