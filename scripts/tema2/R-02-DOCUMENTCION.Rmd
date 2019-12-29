@@ -1,28 +1,24 @@
 ---
-title: "Documentación de Texto"
-author: "Curso de Estadística Descriptiva"
-date: "21/12/2018"
+title: "R-Documentacion de Texto"
+author: "Curso estadistica descriptiva"
+date: "10/12/2019"
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+# TITULO 1
 
-# Título 1
+## TITULO 2
 
-## Título 2
+### TITULO 3
 
-### Título 3
+#### TITULO 4
 
-#### Título 4
+##### TITULO 5
 
-##### Título 5
-
-###### Título 6
+##### TITULO 6
 
 Esto es un texto llano. Podemos escribir sin ningún problema todo el texto que queramos para acompañar a tanto el código en `R` como las fórmulas en \LaTeX. 
 
@@ -32,11 +28,11 @@ Para colocar *cursiva* podemos usar un asterisco: *esto sería un texto en cursi
 
 Para colocar **negrita** podemos usar un doble asterisco: **esto es negrita** o bien una doble barra baja __esto también es negrita__.
 
-Los superíndices van con el *sombrerito*: este curso vale por mi nota^2^. Juan Gabriel^profeonline^ ... 
+Los superíndices van con el *sombrerito*: este curso vale por mi nota^2^. Ruber Hernandes^profeonline^ ... 
 
 Para tachar una palabra usamos una doble tilde ~~Las matemáticas son un rollo~~. 
 
-Para conocer más sobre los cursos de Juan Gabriel, podemos visitar su [perfil de Udemy](https://udemy.com/u/juangabriel2)
+Para conocer más sobre los cursos de Juan Gabriel, podemos visitar su [perfil de Udemy](https://udemy.com/u/juangabriel)
 
 endash: -- Y entonces Juan Gabriel dijo: ....
 
@@ -75,9 +71,12 @@ Aquí empezamos otra cosa
 1. Último ítem
 
 
+
 Alumno        |   Nota    |  Edad
 --------------|-----------|--------
-Juan Gabriel  |  3.5      | 30
-Ricardo       |  5.6      | 55
+ruberhernandez|  3.5      | 30
+Ricardo       |  5.6      | 55 
 María         |  7.3      | 20
 Antonio       |  9.5      | 18
+
+

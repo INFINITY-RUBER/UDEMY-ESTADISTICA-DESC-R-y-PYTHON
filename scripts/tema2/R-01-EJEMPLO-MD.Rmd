@@ -1,0 +1,109 @@
+---
+title: "ejemplo de markdown"
+author: "Curso estadistica"
+date: "9/12/2019"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+### NUESTRAS PROPIAS CHUNKS
+
+Vamos a calcular $\sqrt(2) -e^{-2}$:
+```{r raiz, echo=TRUE, eval=TRUE, results='markup'}
+sqrt(2) - exp(-2)
+x = 1:5
+sqrt(x)
+```
+
+```{r MAGIG, message=TRUE, comment=NA, results='markup'}
+library(magic)
+magic(6)
+
+```
+
+
+Cuando queremos hacer raiz asi:
+
+
+- En $\LateX$: $\sqrt{2}$ 
+- En `R` haciendo `r sqrt(2) - exp(-2)`
+- La frase completa: $\sqrt{2}=$ `r sqrt(2)`
+- Escribimos la raíz cúbica de 5 en LaTeX como...: $\sqrt[3]{5}=$
+
+El numero $\pi$ empiesa por `r pi`.
+
+
+```{r prueba, results='hide', echo=FALSE}
+notas = c(3,5,7,7,910)
+media = mean(notas)
+n = length(notas)
+desv.tip = sd(notas)
+
+```
+# ESCRITURA EN LATEX 
+$\LateX$
+
+
+Este año he hecho $n=$ `r n` examenes, con una media $\overline{x}=$ `r media` y una desviacion tipica de $s=$ `r desv.tip`.
+
+# exament 
+1.El lenguaje para incluir fórmulas matemáticas en R se llama
+respuesta: LaTex
+
+2.¿Cómo podemos incluir una fórmula matemática en un mismo párrafo?
+respuesta: $formula$
+
+3.La instrucción de LaTeX que utilizamos para escribir la fracción 2/3 es..
+respuesta:  $\frac{a}{b}$ 
+
+4. ¿Qué utilizamos para introducir una fórmula en un párrafo aparte?
+respuesta: $$formula$$
+
+5.¿Qué instrucción utilizamos para indicar un producto entre dos valores con un punto?  respuesta: \cdot
+
+6.¿Cómo creamos una matriz (con paréntesis)?
+respuesta: 
+`$$\begin{pmatrix}
+a_{11} & a_{12} & a_{13}\\
+a_{21} & a_{22} & a_{23}
+\end{pmatrix}$$`
+
+7.El símbolo para especificar la unión entre dos conjuntos se escribía con la instrucción de LaTeX...   
+respuesta:  \cup
+
+8.¿Cómo indicamos la producto de los n primeros números naturales en LaTeX?
+respuesta: \prod_{i=1}^ni
+
+9.Escribimos la raíz cúbica de 5 en LaTeX como... respuesta: 
+$\sqrt[3]{5}=$
+
+10.¿Cómo escribirías la siguiente inecuación en LaTeX en un párrafo aparte: (2/3)^2*((3/2)/(alpha/beta))+gamma<= epsilon?
+
+$$\left(\frac{2}{3}\right)^2\cdot\left(\frac{\{\frac{3}{2}}{\frac{\alpha}{\beta}}\right)+\gamma \le\epsilon$$
+
+

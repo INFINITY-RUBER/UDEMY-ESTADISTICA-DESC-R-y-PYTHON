@@ -33,9 +33,43 @@ En los vectores de `R`, todos sus objetos han de ser del mismo tipo: todos núme
 - ```fix(x)```: para modificar visualmente el vector $x$
 - ```rep(a,n)```: para definir un vector constante que contiene el dato $a$ repetido $n$ veces
 
+EJEMPLOS CON LOS VECTORES:
 ```{r}
 c(1,2,3)
 rep("Mates",7)
+c(rep(pi, 5), 5:10, -7) -> x
+c(0, x, 10, x, 20)
+
+```
+OTROS EJEMPLOS:
+```{r}
+x = 1:10
+x
+x - pi
+x * pi
+sqrt(x)
+2^x
+```
+funcion al vector
+```{r}
+x = 1:10
+sapply(x, FUN = function(elemento){sqrt(elemento)})
+```
+Coficiente de Determinacion
+```{r}
+x
+cd = function(x){ summary(lm((1:4)~c(1:3, x)))$r.squared }
+cd(5)
+sapply(x, FUN = cd)
+```
+operacion con vectors
+```{r}
+(1:10)+(1:10)
+(1:10)*(1:10)
+(1:10)^(1:10)
+n = 1:100
+x = 2*3^(n/2)-15
+x
 ```
 
 
@@ -70,6 +104,12 @@ Vamos a crear un vector que contenga 3 copias de 1 9 9 8 0 7 2 6 con la función
 
 Una progresión aritmética es una sucesión de números tales que la **diferencia**, $d$, de cualquier par de términos sucesivos de la secuencia es constante.
 $$a_n = a_1 + (n-1)\cdot d$$
+```{r}
+seq(5, 60, by = 2.5)
+seq(5, 60, by = 3.5)
+seq(100, 6, by = -9)
+30:-6
+```
 
 - ``seq(a,b,by=d)``: para generar una [progresión aritmética](https://es.wikipedia.org/wiki/Progresión_aritmética) de diferencia $d$ que empieza en $a$ hasta llegar a $b$
 - ```seq(a,b, length.out=n)```: define progresión aritmética de longitud $n$ que va de $a$ a $b$ con diferencia $d$. Por tanto $d=(b-a)/(n-1)$
@@ -186,6 +226,28 @@ v[2]
 v[-c(3,5)]
 v[v != 19 & v>15]
 ```
+
+```{r}
+x = 1:20
+x
+x[x>10]
+x[!x>10]
+x[!x<10]
+x[!x%%2==0]
+x[x%%2==0]
+x[x%%2==1]
+x[!x%%2==1]
+x>10
+```
+```{r}
+x = c(4,5,6,9,3,0,8)
+y = c(1,-5,6,-19,-2,0,-8)
+x[y>0]
+x[y<0]
+y[x>0]
+```
+
+
 	
 	
 ## Condicionales
@@ -196,6 +258,83 @@ v[v != 19 & v>15]
 - ```which.max(x)```: nos da la primera posición en la que el vector $x$ toma su valor máximo
 - ```which(x==max(x))```: da todas las posiciones en las que el vector $x$ toma sus valores máximos
 
+```{r}
+x = c(4,5,6,9,3,0,8)
+y = c(1,-5,6,-19,-2,0,-8)
+x
+which(x > 4)
+x[which(x > 4)]
+x[x>4]
+which(x > 4 & x < 8)
+which(x%%2==0)
+x
+which.min(x)
+which.max(x)
+which(x==min(x))
+which(x==max(x))
+```
+# calculos boleanos
+```{r}
+12345678%%9==0
+length(1:100)>600
+x = 1:10
+x[3]
+x[3] = 32
+x
+x[11]
+x[11] = 15
+x
+x[2:5]= x[2:5]+2
+x
+x[(length(x)-2):length(x)] = 0  # cambiar las utlmias posiciones
+x
+x[length(x) + 5] = 9
+x
+sum(x)
+prod(x)
+cumsum(x)
+# eliminar NA del vector
+sum(x)
+```
+# eliminar NA del vector
+```{r}
+x = 1:10
+x[length(x) + 5] = 9
+x
+sum(x, na.rm = TRUE) 
+mean(x, na.rm = TRUE) 
+which(x == NA)
+is.na(x)
+which(is.na(x))
+x[which(is.na(x))]
+y=x
+y
+y[is.na(y)] = mean(y, na.rm = TRUE)  # REMPLAZA NA POR LA MEDIA DEL VECTOR
+y
+cumsum(x[!is.na(x)])
+```
+
+# OMITIR LOS N/A DEL VECTOR
+
+```{r}
+na.omit(x)
+sum(na.omit(x) )
+cumsum(na.omit(x))
+```
+## BORRAR LOS ATRIBUTOS EXTRAS DE OMITR EL N/A
+
+```{r}
+x
+claer_x = na.omit(x)
+claer_x 
+attr(claer_x, "na.action") = NULL
+claer_x 
+attr(claer_x, "class") = NULL
+claer_x 
+```
+
+
+
 
 # Factores
 
@@ -205,6 +344,15 @@ v[v != 19 & v>15]
 
 - `levels`: atributo del factor. Cada elemento del factor es igual a un nivel. Los niveles clasifican las entradas del factor. Se ordenan por orden alfabético
 - Para definir un factor, primero hemos de definir un vector y trasformarlo por medio de una de las funciones `factor()` o `as.factor()`.
+
+```{r}
+gender = c("M", "H","H","M","M","M", "H","H","H")
+gender.fact = factor(gender)
+gender.fact
+gender.fact2 = as.factor(gender)
+gender.fact2
+```
+
 
 ## La función factor()
 
@@ -256,8 +404,21 @@ facOrd
 
 ```{r}
 x = c(1,-2,3,4,-5,6,7,-8,-9,0)
+x
 miLista = list(nombre = "X", vector = x, media = mean(x), sumas = cumsum(x))
 miLista
+```
+```{r}
+x
+miLista$vector
+miLista$sumas
+miLista[[3]]
+miLista[[2]]
+miLista[[1]]
+miLista[[4]]
+miLista[2]
+3*miLista[2]
+3*miLista[[2]]
 ```
 
 
@@ -267,6 +428,7 @@ miLista
 str(miLista)
 names(miLista)
 ```
+
 
 
 
@@ -281,6 +443,21 @@ names(miLista)
     -` ncol`: número de columnas (puede usarse en lugar de nrow)
     - R muestra las matrices indicando como [$i,$] la fila $i$-ésima y [$,j$] la columna $j$-ésima
 	- Todas las entradas de una matriz han de ser del mismo tipo de datos
+	
+```{r}
+M = matrix(1:12,nrow = 4)
+M
+M = matrix(1:12,nrow = 4, byrow = T)
+M
+M = matrix(1:12,nrow = 3)
+M
+```
+	
+```{r}
+M = matrix(1:12,nrow = 5)
+M
+matrix(1, nrow = 4, ncol = 6)
+```
 	
 
 ## Cómo definirlas{.exercise}
@@ -308,6 +485,12 @@ $$\begin{pmatrix}
 - `diag(vector)`: para construir una matriz diagonal con un vector dado
     - Si aplicamos diag a un número $n$, produce una matriz identidad de orden $n$
 
+```{r}
+rbind(M, c(1,2,3), c(-1,-2,-3))
+cbind(M, c(1,2,3), c(-1,-2,-3))
+diag( c(1,1,1))
+diag( c(1:6))
+```
 
 
 ## Submatrices
@@ -317,6 +500,14 @@ $$\begin{pmatrix}
 - `matriz[,j]`: indica la columna $j$-ésima de la siendo $j\in\mathbb{N}$
     - Si $i$ ($j$) es un vector de índices, estaremos definiendo la submatriz con las filas (columnas) pertenecientes al vector $i$ ($j$)
     
+```{r}
+M
+M[2,3]
+M[5,2]
+M[,2]
+M[4,]
+M[c(1,3,5), 1:2] # crear una subMatriz de M
+```
     
 ## Funciones
 
@@ -327,6 +518,14 @@ $$\begin{pmatrix}
 - `sum(matriz)`: obtenemos la suma de todas las entradas de la matriz
 - `prod(matriz)`: obtenemos el producto de todas las entradas de la matriz
 - `mean(matriz)`: obtenemos la media aritmética de todas las entradas de la matriz
+```{r}
+M
+diag(M)
+nrow(M)
+dim(M)
+prod(M)
+mean(M)
+```
 
 
 ## Funciones 
@@ -335,6 +534,13 @@ $$\begin{pmatrix}
 - `rowSums(matriz)`: obtenemos las sumas por filas de la matriz
 - `colMeans(matriz)`: obtenemos las medias aritméticas por columnas de la matriz
 - `rowMeans(matriz)`: obtenemos las medias aritméticas por filas de la matriz
+```{r}
+M
+colSums(M)
+rowSums(M)
+colMeans(M)
+rowMeans(M)
+```
 
 
 ## Funciones
@@ -383,6 +589,15 @@ apply(A, MARGIN = 2, FUN = sum)
 - `%%`: para elevar matrices
     - Del paquete `expm`
 		- No calcula las potencias exactas, las aproxima
+```{r}
+M
+t(M)
+# para multiplicar matrices %*%:
+M%*%t(M)  # 1*1 + 6*6 +  11*11 = 158 Fila*Columna
+1*1 + 6*6 +  11*11
+M*M
+mtx.exp(M,2)
+```
 
 
 ## Operaciones {.exercise}
@@ -410,6 +625,21 @@ Observad qué ocurre si, siendo $A = \begin{pmatrix}
 - `qr(matriz)$rank`: para calcular el rango de la matriz
 - `solve(matriz)`: para calcular la inversa de una matriz invertible
     - También sirve para resolver sistemas de ecuaciones lineales. Para ello introducimos `solve(matriz,b)`, donde $b$ es el vector de términos independientes
+
+```{r}
+M1 = rbind(c(1,4,2), c(0,1,3), c(1,8,9))
+M1
+det(M1)
+qr(M1)
+qr(M1)$rank
+solve(M1)
+# MATRIX IDENTIDAD
+solve(M1)%*%M1
+round(solve(M1)%*%M1,2)
+# RESOLVER LA ECUACION 
+M1
+solve(M1, c(1,2,3))
+```
     
     
 ## Valores y vectores propios
@@ -447,8 +677,21 @@ Si hay algún vap con multiplicidad algebraica mayor que 1 (es decir, que aparec
 ## Valores y vectores propios
 
 ```{r}
-M = matrix(c(0,1,0,-7,3,-1,16,-3,4), nrow=3, byrow=TRUE)
-eigen(M)
+M2 = matrix(c(0,1,0,-7,3,-1,16,-3,4), nrow=3, byrow=TRUE)
+M2
+eigen(M2)
+eigen(M2)$values
+eigen(M2)$vectors
 ```
     
+```{r}
+A = matrix(c(3-2i, 5+3i, 1+2i, 2-1i), nrow = 2, byrow = T)
+A
+A%*%A
+eigen(A)
+solve(A, c(1-1i, 4))
+det(A) # el determinate para complejos no existe
+prod(eigen(A)$values) # = det(A)
+```
+   
 
