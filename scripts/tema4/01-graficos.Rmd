@@ -30,6 +30,7 @@ f <- function(x){ sqrt(x) }
 plot(f)
 ```
 
+
 ## Parámetros
 
 ```{r, echo=FALSE, fig.align='center'}
@@ -38,8 +39,9 @@ fib = (1/sqrt(5))*((1+sqrt(5))/2)^n - (1/sqrt(5))*((1-sqrt(5))/2)^n
 fib
 par(mfrow = c(1,2))
 plot(fib, xlab = "n", ylab = expression(F[n]),
-     main = "Sucesión de Fibonacci", pch = 21, cex = 2,
-     col = "powderblue", bg = "orchid", log = "xy")
+     main = "Sucesión de Fibonacci", pch = 22, cex = 3,
+     col = "deeppink1", bg = "gray4", log = "xy")
+
 
 plot(fib, xlab = "n", ylab = expression(F[n]),
      main = "Sucesión de Fibonacci", pch = 21, cex = 2,
@@ -49,14 +51,15 @@ par(mfrow = c(1,1))
 
 
 ```{r}
-plot(n, fib, pch = 21, col = "red", bg = "yellow", cex = 1.2, 
+plot(n, fib, pch = 21, col = "red", bg = "yellow", cex = 1.7, 
      main = "Fibonacci",
-     type = "o", lty = "dashed", lwd = 2, 
-     xlim = c(1,10), ylim = c(1, 100),
-     xaxp = c(1,10,3), yaxp = c(0,100, 10))
+     type = "o", lty = "dotted", lwd = 2, 
+     xlim = c(1,11), ylim = c(1, 100),
+     xaxp = c(1,10,4), yaxp = c(0,100, 10))
 ```
 
 ## Cómo añadir elementos a un gráfico
+
 ```{r}
 f <- function(x){
   x^2 -2*x + sqrt(abs(x))
@@ -66,18 +69,18 @@ points(0,0, pch = 19)
 points(-3:3, (-3:3)^2, col = "blue")
 abline(2,3, lty = "dashed", col = "red")
 abline(v = 2, lty = "dotted", col = "green")
-abline(h = 5, lty = "dotdash", col = "gray")
+abline(h = 5, lty = "dotdash", col = "red")
 ```
 
 ```{r}
 f <- function(x){x^2}
 plot(f, xlim = c(-3,3), col = "red", lwd = 2, ylab = expression(y^2), xlab = "x")
-abline(h=0:9, v = -3:3, lty="dotted", col = "grey")
+abline(h=0:9, v = -3:3, lty="dotted", col = "black")
 ```
 
 ```{r}
 plot(tan, xlim = c(-pi, pi), ylim = c(-5,5))
-abline(v = c(-pi/2, pi/2), col = "red")
+abline(v = c(-pi/2, pi/2), col = "blue")
 ```
 
 ```{r}
@@ -89,6 +92,7 @@ text(0,0, labels = "derecha", pos = 4)
 points(0,1)
 text(0,1, labels = "centro")
 ```
+
 
 
 ```{r}
@@ -105,4 +109,19 @@ legend("bottomright",
        lty = c("dotted", "dashed", "dashed")
        )
 ```
+```{r}
+# segmentos
+x = c(5*(1:10))
+plot(x,c(exp(-x)+(-1)^x*x/2*sin(x)^2), xlab = "", ylab = "", 
+     main = "Grafico con varios elementos")
+segments(10,0,40,0, col = "red", lwd = 4)
+arrows(10,0,40,-10, col = " blue", length = 0.5, angle = 90, code = 3)
+arrows(10,0,40,-10, col = " blue", length = 0.5, angle =45, code = 3)
+arrows(10,0,40,-10, col = " blue", length = 0.5, angle =25, code = 3)
+symbols(40,0,stars = cbind(1,.5,1,.5,1,.5,1,.5,1,.5), add = TRUE, lwd = 4, inches = 0.8)
+symbols(40,0,stars = cbind(1,.5,1,.5,1,.5,1,.5,1,.5), add = TRUE, lwd = 3)
+polygon(c(20,30,40),c(10,-10,10), col = "gold", density = 3, angle = 90, lty = 4, lwd = 5)
+
+```
+
 

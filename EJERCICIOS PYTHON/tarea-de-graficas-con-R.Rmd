@@ -1,0 +1,40 @@
+---
+title: "tarea de graficos"
+author: "RUBER HERNANDEZ"
+date: "8/1/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Preguntas de esta tarea
+1 - Con una sola instrucción, dibujad el gráfico de la función y=x^2−3x+30 entre −15 y 15. De título, poned “Una parábola”. De etiquetas, en el eje 0X poned, en formato matemático, "x"; y en el eje 0Y, introducid $y=x^2−3x+30$, también en formato matemático. Tenéis que utilizar la función curve()
+
+```{r}
+curve(x^2-3*x+30 ,-15, 15, 
+      main="Una parábola",
+      xlab = expression(x),
+      ylab = expression(y=x^2-3*x+30),
+      lty = "dashed", 
+      col = "blue", add = FALSE
+      )
+```
+
+2 - Considerando lo que habéis obtenido en el ejercicio anterior y siendo y = f(x) = x^2−3x+30 e I = [-15:15], si en vez de utilizar la función curve(), utilizamos la función plot(), ¿es correcta la sentencia plot(f(I)) para representar la curva f en el intervalo I? En otras palabras, dan ambas sentencias la misma gráfica? Obviamente, en la sentencia plot(f(I)) se han omitido el resto de parámetros requeridos en el ejercicio anterior porque no influyen para nada en la curva. Tanto si la respuesta es afirmativa como negativa, cread la función f en R y argumentad vuestra respuesta, considerando todos los parámetros requeridos (título y etiquetas de ambos ejes).
+
+```{r}
+f = function(x){x^2-3*x+30 }
+i = c(-15:15)
+plot(f(i))
+
+# NO DA LA MISMA GRAFICA GENERA UNA GRAFICA CON PUTOS
+plot(i, f(i), 
+     type = "l", 
+     col="blue",
+     lty = "dashed",
+     xlab = expression(x),
+     ylab = expression(y=x^2-3*x+30))
+```
+
