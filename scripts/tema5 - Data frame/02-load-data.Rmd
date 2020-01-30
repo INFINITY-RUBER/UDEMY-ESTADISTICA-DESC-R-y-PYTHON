@@ -4,8 +4,19 @@ author: "Curso de Estadística Descriptiva"
 date: "23/12/2018"
 output: html_document
 ---
+# Leyendo tablas de datos
+**read.table():**para definir un data frame a partir de una tabla de datos contenida en un fichero
+Este fichero puede estar guardado en nuestro ordenador o bien podemos conocer su url. Sea cual sea el caso, se aplica la función al nombre del fichero o a la dirección entre comillas
 
-# Carga de ficheros local
+# Parámetros de read.table()
+
+- **header = TRUE:** para indicar si la tabla que importamos tiene una primera fila con los nombres de las columnas. El valor por defecto es FALSE
+- **col.names = c(...):** para especificar el nombre de las columnas. No olvidéis que cada nombre debe ir entre comillas
+- *sep:* para especificar las separaciones entre columnas en el fichero (si no es un espacio en blanco). Si es así, hay que introducir el parámetro pertinente entre comillas
+- *dec:* para especificar el signo que separa la parte entera de la decimal (si no es un punto. Si es así, hay que introducir el parámetro pertinente entre comillas
+
+##  Carga de ficheros local
+https://maitra.public.iastate.edu/stat501/datasets.html
 
 Breed (1/5/8), 
 Sale Price, 
@@ -18,6 +29,7 @@ sale height at shoulder (in.)
 sale weight (lbs.) of three breeds of bulls.
 
 ```{r}
+df1 = read.table("../../data/bulls.dat")
 df = read.table("../../data/bulls.dat",
                 header = FALSE, 
                 col.names = c("breed", "sale_price", "shoulder",
@@ -27,12 +39,12 @@ df = read.table("../../data/bulls.dat",
 head(df)
 ```
 
-
 # Carga desde URL
 
-```{r}
-df2 = read.table("https://maitra.public.iastate.edu/stat501/datasets/bulls.dat",
-                 header = FALSE, 
+```{r paged.print=TRUE}
+# df2 = read.table("https://maitra.public.iastate.edu/stat501/datasets/bulls.dat",
+df2 = read.table("../../data/bulls.dat",
+                header = FALSE, 
                 col.names = c("breed", "sale_price", "shoulder",
                           "fat_free", "percent_ff", "frame_scale",
                           "back_fat", "sale_height", "sale_weight"),
@@ -42,10 +54,20 @@ str(df2)
 ```
 
 
-# Factores en un DF
+# Factores en un data Frame
+*stringsAsFactors:* para prohibir la transformación de las columnas de palabras en factores debemos usar stringsAsFactors=FALSE (ya que por defecto, R realiza dicha transformación)
+Para importar un fichero de una página web segura (cuyo url empiece con https), no podemos entrar directamente la dirección en read.table(); una solución es instalar y cargar el paquete RCurl y entonces usar la instrucción *read.table (textConnection(getURL(“url ”)),...)*
+```{r}
+df4 = read.table(textConnection(getURL("https://maitra.public.iastate.edu/stat501/datasets/olive.dat")))
+                  
+str(df4)
+```
+
 
 ```{r}
-df3 = read.table("https://maitra.public.iastate.edu/stat501/datasets/olive.dat",
+
+# df3 = read.table("https://maitra.public.iastate.edu/stat501/datasets/olive.dat",
+df3 = read.table("../../data/olive.dat",
                  stringsAsFactors = FALSE,
                  header = TRUE)
 str(df3)

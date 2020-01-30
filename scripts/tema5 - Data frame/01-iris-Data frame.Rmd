@@ -1,0 +1,51 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+# Data frame de Iris
+
+- **head(d.f,n):** para mostrar las n primeras filas del data frame. Por defecto se muestran las 6 primeras filas.
+- **tail(d.f,n):** para mostrar las n últimas filas del data frame. Por defecto semuestran las 6 últimas.
+- **str(d.f):** para conocer la estructura global de un data frame.
+- **names(d.f):** para producir un vector con los nombres de las columnas
+- **rownames(d.f):** para producir un vector con los identificadores de las filas R entiende siempre que estos identificadores son palabras, aunque sean números, de ahí que los imprima entre comillas
+- **colnames(d.f):** para producir un vector con los identificadores de las columnas
+- **dimnames(d.f):** para producir una list formada por dos vectores (el de los identificadores de las filas y el de los nombres de las columnas)
+- **nrow(d.f):** para consultar el número de filas de un data frame
+- **ncol(d.f):** para consultar el número de columnas de un data frame
+- **dim(d.f):** para producir un vector con el número de filas y el de columnas
+- **d.f$nombre_variable:** para obtener una columna concreta de un dataframe El resultado será un vector o un factor, según cómo esté definida la columna dentro del data frame Las variables de un data frame son internas, no están definidas en el entorno global de trabajo de R
+
+```{r}
+df = iris
+head(df, 5) # 5 primeros
+tail(df, 5) # 5 ultimos
+str(df)
+names(df) #colnames
+rownames(df)
+dimnames(df)
+dim(df)
+df$Petal.Length[1:10] #para obtener una columna concreta de un dataframe
+df$Species[1:10]
+```
+# Sub-data frames
+- **d.f[n,m]:** para extraer “trozos” del data frame por filas y columnas (funciona exactamente igual que en matrices) donde n y m pueden definirse como:
+-intervalos
+-condiciones
+-números naturales
+-no poner nada
+-Si sólo queremos definir la subtabla quedándonos con algunas variables, basta aplicar el nombre del data frame al vector de variables
+-Estas construcciones se pueden usar también para reordenar las filas o columnas
+## Acceso al DF
+
+```{r}
+df[1:10, ]
+df[1:10, 2:4]
+df[df$Species == "setosa" & df$Sepal.Width> 4, ] # filtrar en data frame
+df[df$Species == "setosa" & df$Sepal.Width> 4, ][c(1,3), c(2,5)]
+```
+
