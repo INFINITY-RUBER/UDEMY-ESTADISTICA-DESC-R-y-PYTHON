@@ -72,7 +72,14 @@ df3 = read.table("../../data/olive.dat",
                  header = TRUE)
 str(df3)
 ```
-
+## Leyendo diferentes tipos de fichero
+*read.csv():* para importar ficheros en formato CSV
+*read.xls() o read.xlsx()*: para importar hojas de cálculo tipo Excel u OpenOffice en formato XLS o XLSX, respectivamente. Se necesita el paquete xlsx
+*read.mtb():* para importar tablas de datos Minitab. Se necesita el paquete foreign
+*read.spss():* para importar tablas de datos SPSS. Se necesita el paquete foreign
+*write.table(df, file = ""):* para exportar un data frame a un fichero
+file = "": es donde indicaremos el nombre que queremos darle al fichero
+Podemos usar el parámetro sep para indicar el símbolo de separación de columnas. Siempre entre comillas. También podemos utilizar el parámetro dec para indicar la separación entre la parte entera y decimal de los datos
 # Guardar un DF
 
 ```{r}
@@ -80,7 +87,29 @@ write.table(df3, file = "../../data/olive.txt", dec = ".")
 df4 = read.table("../../data/olive.txt", header = TRUE, dec = ".")
 head(df4)
 ```
+## Construyendo data frames
+**data.frame(vector_1,...,vector_n):** para construir un data frame a partir de vectores introducidos en el orden en el que queremos disponer las columnas de la tabla
+R considera del mismo tipo de datos todas las entradas de una columna de un data frame
+Las variables tomarán los nombres de los vectores. Estos nombres se pueden especificar en el argumento de *data.frame* entrando una construcción de la forma *nombre_variable = vector*
+- **rownames:** para especificar los identificadores de las filas
+También en esta función podemos hacer uso del parámetro *stringsAsFactors* para evitar la transformación de las columnas de tipo palabra en factores
+-**fix(d.f):** para crear / editar un data frame con el editor de datos
+-**names(d.f):** para cambiar los nombres de las variables
+-**rownames(d.f): **para modificar los identificadores de las filas. Han de ser todos diferentes
+-**dimnames(d.f)=list(vec_nom_fil, vec_nom_col):** para modificar el nombre de las filas y de las columnas simultáneamente
 
+## Construyendo data frames
+**d.f[núm_fila,] = c(...):** para añadir una fila a un data frame
+Las filas que añadimos de esta manera son vectores, y por tanto sus entradas han de ser todas del mismo tipo
+Si no añadimos las filas inmediatamente siguientes a la última fila del data frame, los valores entre su última fila y las que añadimos quedarán no definidos y aparecerán como NA
+Para evitar el problema anterior, vale más usar la función *rbind()* para concatenar el data frame con la nueva fila
+**d.f$new_var: **para añadir una nueva variable al data frame
+Podemos concatenar columnas con un data frame existente mediante la función *cbind()*. De este modo se puede añadir la columna directamente sin necesidad de convertirla antes a data frame
+Esta nueva variable ha de tener la misma longitud que el resto de columnas del data frame original. Si no, se añadirán valores NA a las variables del data frame original o a la nueva variable hasta completar la misma longitud
+## Cambiando los tipos de datos
+*as.character: *para transformar todos los datos de un objeto en palabras
+*as.integer:* para transformar todos los datos de un objeto a números enteros
+*as.numeric:* para transformar todos los datos de un objeto a números reales
 
 # Crear un DF
 
@@ -102,7 +131,14 @@ df5
 df5$Sexo = as.character(df5$Sexo)
 df5$Ingresos = c(10000, 12000, 15000, 12000, 20000, 10000)
 ```
+## sobre sub-data frames
+**droplevels(d.f)**: para borrar los niveles sobrantes de todos los factores, ya que las columnas que son factores heredan en los sub-data frames todos los niveles del factor original, aunque no aparezcan en el trozo que hemos extraído
 
+*select(d.f, parámetros):* para especificar que queremos extraer de un data frame
+*starts_with("x"): *extrae del data frame las variables cuyo nombre empieza con la palabra "x"
+*ends_with("x"):* extrae del data frame las variables cuyo nombre termina con la palabra "x"
+*contains("x"):* extrae del data frame las variables cuyo nombre contiene la palabra "x"
+Se necesita el paquete *dplyr* o mejor aún *tidyverse*
 
 ```{r}
 gender = c("H", "M", "M", "M", "H")
@@ -123,6 +159,10 @@ head(iris_petal)
 iris_length = select(iris, ends_with("Length"))
 head(iris_length)
 ```
+**subset(d.f,condición,select = columnas):** para extraer del data frame las filas que cumplen la condición y las columnas especificadas
+Si queremos todas las filas, no hay que especificar ninguna condición
+Si queremos todas las columnas, no hace especificar el parámetro select
+Las variables en la condición se especifican con su nombre, sin añadir antes el nombre del data frame
 
 # Subset
 ```{r}

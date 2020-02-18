@@ -1,0 +1,83 @@
+# taller de data frames
+**1. ¿Cuantos deportistas aparecen en el data frame?**
+```{r}
+Dframe = read.csv("http://winterolympicsmedals.com/medals.csv", stringsAsFactors = FALSE)
+str(Dframe)
+nrow(Dframe)
+#Se toman los factores M y W como un solo deportista. Factor X como dos deportistas mixtos.
+#Contamos las filas con factores M y W y se le suma X a cada  una ya que X es un M y W
+Fctor_M  = nrow(Dframe[Dframe$Event.gender=="M", ])+nrow(Dframe[Dframe$Event.gender=="X", ])
+Fctor_W = nrow(Dframe[Dframe$Event.gender=="W", ])+nrow(Dframe[Dframe$Event.gender=="X", ])
+T_altletas = Fctor_M + Fctor_W
+
+#Creamos un DF con las 3 observaciones
+Tathletex = data.frame(Men=Fctor_M, Women=Fctor_W, Total=T_altletas)
+str(Tathletex)
+```
+
+**2. ¿Cuantos han ganado medallas de oro, cuantos de plata y cuantos de bronce?**
+### filtramos mediante subset cada tipo de mellas y contamos sus filas.
+
+```{r}
+gold = nrow(Dframe[Dframe$Medal=="Gold", ])
+silverd = nrow(Dframe[Dframe$Medal=="Silver", ])
+bronze = nrow(Dframe[Dframe$Medal=="Bronze", ])
+#Creamos un nuevo DF con una sola fila y 3 observaciones
+Total_Medallas = data.frame(Gold =gold, Silver=silverd, Bronze=bronze)
+str(Total_Medallas)
+```
+**3. ¿En cuantos lugares se han hecho olimpiadas de invierno?**
+```{r}
+df= as.factor(Dframe$City)
+str(df)
+
+```
+**4. ¿Cuantos hombres y cuantas mujeres hay?**
+
+```{r}
+Dframe$Event.gender = as.factor(Dframe$Event.gender)
+man = Dframe[Dframe$Event.gender=="M",]
+mans = droplevels(man)
+nrow(mans) # numero de hombres
+
+girl  = Dframe[Dframe$Event.gender=="W",]
+nrow(girl) # numero de mujeres
+# str(girl)
+
+```
+
+**5. ¿¿En qué año participaron más deportistas?**
+```{r}
+Dframe$Year = as.factor(Dframe$Year)
+año = table(Dframe$Year)
+año
+años = which.max(año)
+años
+```
+**6. El campo NOC indica el país del ganador de la medalla. ¿Qué país puede presumir de haber ganado más medallas de oro en los juegos de invierno entre 1960 y 1996?**
+```{r}
+noc = subset(Dframe, Medal=="Gold" & Year >= 1960 & Year <= 1996)
+noc
+Md_Oro = table(noc$NOC)
+Md_Oro
+which.max(Md_Oro)
+Md_Oro[which.max(Md_Oro)]
+```
+## Reconvirtiendo a Int la columna año
+```{r}
+df = read.csv("http://winterolympicsmedals.com/medals.csv", stringsAsFactors = FALSE)
+df$Year = as.numeric(levels(df$Year)[df$Year])
+
+str(df)
+
+
+noc = subset(df, Medal == "Gold" & Year >= 1960 & Year <= 1996)
+
+mas_oro = table(noc$NOC)
+
+mas_oro
+```
+
+
+
+

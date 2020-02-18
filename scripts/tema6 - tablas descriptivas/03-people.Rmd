@@ -18,21 +18,23 @@ sum(HairEyeColor) -> total
 El total de individuos de la tabla de datos es `r total`.
 
 ```{r}
-prop.table(HairEyeColor, margin = 3)
-prop.table(HairEyeColor, margin = c(1,2))
+prop.table(HairEyeColor, margin = 3)# frecuencia marginal
+prop.table(HairEyeColor, margin = c(1,2)) # la marginal repartido por ojos
 ```
 
 ```{r}
-aperm(HairEyeColor, perm = c("Sex", "Hair", "Eye"))
+aperm(HairEyeColor, perm = c("Sex", "Hair", "Eye")) # cambiar el orden de las Columnas
 ```
 
 ```{r}
-library(kableExtra)
+library(kableExtra)# para mirar la info completa forma tabla
 kable(HairEyeColor)
 ```
+`
+
 
 ```{r, results='asis'}
-library(xtable)
+library(xtable) # para tablas para  2 demenciones
 sex = factor(c("H", "M", "M", "M", "H", "H", "M", "M"))
 ans = factor(c("S", "N", "S", "S", "S", "N", "N", "S"))
 
