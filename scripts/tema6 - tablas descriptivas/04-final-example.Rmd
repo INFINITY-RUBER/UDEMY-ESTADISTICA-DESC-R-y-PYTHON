@@ -57,7 +57,7 @@ barplot(prop.table(rowSums(data)), ylim = c(0, 0.5),
         col = c("black", "burlywood4", "red", "yellow")
         )
 ```
-
+  
 
 ## Frecuencias relativas globales y marginales
 
