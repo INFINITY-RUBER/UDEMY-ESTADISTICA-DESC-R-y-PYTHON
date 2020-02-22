@@ -95,7 +95,7 @@ barplot(Tgrafica, beside = TRUE,
 
 ## Se observa que en las razas negras tienen mas nacimientos con niños bajos de peso
 
-*6. Repite los cuatro ejercicios anteriores para los pares (madre fumadora o no, peso inferior a 2.5 kg o no) y para los pares (madre hipertensa o no, peso inferior a 2.5 kg o no.*
+*6. Repite los cuatro ejercicios anteriores para los pares (madre fumadora o no, peso inferior a 2.5 kg o no) y para los pares (madre hipertensa o no, peso inferior a 2.5 kg o no).*
 ```{r}
 levels(factor(df$low))
 levels(factor(df$smoke))
@@ -142,8 +142,90 @@ barplot(Tgrafica1, beside = TRUE,
 
 ```
 
+### (madre hipertensa o no, peso inferior a 2.5 kg o no)
+
+```{r}
+levels(factor(df$low))
+levels(factor(df$ht))
+
+dht <- table(df$ht, df$low, dnn = c("Hipertensa", "Peso_2.5_kgs"))
+dht
+
+```
+```{r}
+dimnames(dht) = list(
+  Hipertensa = c("No", "Si"), 
+  Peso_2.5_kgs = c("No", "Si")
+)
+dht
+prop.table(dht, margin = 2)
+round(prop.table(dht, margin = 2), 3)
+
+graf_dht= round(prop.table(dht, margin = 2), 3)
+plot(graf_dht, 
+     main = "Grafica de mosaico de las variables\n \"Hipertensas\" y \"Peso menor a 2.5 kg\" ",
+     col = c("blue", "yellow"),
+     ylab = "Peso_2.5_kgs")
+```
 
 
-Calcula una tabla de frecuencias relativas marginales de las ternas (raza de la madre, madre fumadora o no, peso inferior a 2.5 kg o no) que permita ver si la raza de la madre y su condición de fumadora o no fumadora influyen en el peso del bebé.
+```{r}
+
+graficaHd = (prop.table(dht, margin = 1))
+
+barplot(graficaHd , 
+        beside = TRUE,
+        legend.text = TRUE,
+        args.legend = list(title = "Hipertesa", x = "top"),
+        main = "Frecuencias relativas de \"Hipertensas\" con\n relacion a\"Peso menor a 2.5 kg\" ",
+        col = c("yellow1", "green4"), 
+        ylim = c(0, 0.8),
+        xlab = "Peso Menor a 2,5 kg"
+        )
+
+Tgrafica2 = t(prop.table(dht, margin = 2))
+barplot(Tgrafica2, beside = TRUE, 
+        legend.text = TRUE,
+        args.legend = list(
+          title = "Peso menor a 2.5 kg", x = "topright"),
+        
+        col = c("yellow", "blue4"),
+        main = "Frecuencias relativas de Peso menor a 2.5 kg\n en relacion con las Hipertensas",
+        ylim = c(0, 1),
+        xlab = "Hipertensa"
+        )
+
+
+```
+
+
+
+*7. Calcula una tabla de frecuencias relativas marginales de las ternas (raza de la madre, madre fumadora o no, peso inferior a 2.5 kg o no) que permita ver si la raza de la madre y su condición de fumadora o no fumadora influyen en el peso del bebé.*
+```{r}
+str(df)
+d7 = table(df$race, df$smoke, df$low, dnn = c("Raza","Fuma", "Peso_2.5_kgs"))
+d7
+```
+```{r}
+dimnames(d7) = list(
+  Raza = c("blanca", "negra", "otra"), 
+  Fuma = c("No", "Si"),
+  Peso_2.5_kgs = c("No", "Si")
+)
+d7
+
+round(prop.table(d7, margin = c(1, 2)),3)
+
+
+## Dibuja un diagrama de mosaico de la tabla del ejercicio anterior.
+
+graf_dht = round(prop.table(d7, margin = c(1, 2)),3)
+
+plot(graf_dht, 
+      col = c("yellow", "blue4"),
+      main = "Grafica de mosaico de las variables\n \"Hipertensas\" , \"Fuma\" y \"Peso menor a 2.5 kg\" ")
+```
+
+
 
 Dibuja un diagrama de mosaico de la tabla del ejercicio anterior.
