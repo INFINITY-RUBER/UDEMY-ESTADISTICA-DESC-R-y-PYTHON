@@ -187,6 +187,7 @@ Retomemos el ejemplo anterior de las notas de los estudiantes y calculemos y rep
 
 ```{r}
 notas
+
 fAbs = table(notas) #Frec. abs.
 cumsum(fAbs) #Frec. abs. acumuladas
 ```
@@ -216,6 +217,9 @@ cumsum(table(notas)/length(notas))
 ## Función cumsum()
 
 Pero no podemos hacer `prop.table(cumsum(table(notas)))`.
+```{r}
+prop.table(cumsum(table(notas)))
+```
 
 <div class = "exercise">
 **Ejercicio.** Pensad qué ha entendido R que queríamos hacer con esta última instrucción.
@@ -285,6 +289,8 @@ La instrucción `barplot` produce el siguiente diagrama de barras de frecuencias
 
 ```{r}
 barplot(Fr.RAcum, main = "Diagrama de frecuencias relativas acumuladas")
+barplot(Fr.Acum, main = "Diagrama de frecuencias relativas absolutas")
+
 ```
 
 ## Función cumsum()
@@ -377,7 +383,9 @@ Consideremos el data frame `datacrab` y arreglemos los datos.
 
 ```{r}
 crabs = read.table("../data/datacrab.txt", header = TRUE)
+crabs
 crabs = crabs[,-1] #Omitimos la primera columna
+crabs
 str(crabs)
 ```
 
@@ -407,6 +415,7 @@ Por lo tanto, nosotros llevaremos a cabo la siguiente instrucción
 ```{r}
 intervalos = cut(crabs$width, breaks = c(21,25,29,33,Inf), right = FALSE, 
                  labels = c("21-25", "25-29", "29-33", "33-..."))
+intervalos
 ```
 
 ## Ejemplo 5
@@ -439,7 +448,7 @@ Tabla
 ## Ejemplo 5
 
 ```{r}
-Fr.rel = round(prop.table(Tabla,margin = 1),3)
+Fr.rel = round(prop.table(Tabla,margin = 1),3) # frecuencia relativas
 Fr.rel
 ```
 
