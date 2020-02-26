@@ -1,0 +1,77 @@
+---
+title: "ejercicios-cuantitativo-R"
+author: "Ruber"
+date: "24/2/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Carga el conjunto de datos de la carpeta data llamado grades.txt en R y responde a las siguientes preguntas
+
+Preguntas de esta tarea
+
+*1. Calcula la media, la mediana y la moda redondeada a dos cifras decimales de las notas numéricas de los exámenes tanto de forma conjunta como por estudio universitario. ¿En qué grupo observamos la nota más alta? ¿Qué grupo está por encima de la media de estudiantes?*
+```{r}
+df = read.table("../../data/grades.txt", header = TRUE)
+head(df)
+summary(df)
+table(df$nota)
+```
+```{r}
+# media
+round(mean(df$nota),2)
+
+# mediana
+round(median(df$nota))
+
+# la moda
+round(as.numeric(names(which(table(df$nota) ==max(table(df$nota))))),2 )
+
+by(df, df$estudio, FUN = summary)
+
+# ¿En qué grupo observamos la nota más alta? -> df$estudio: Industrial  Max.:10.025
+# ¿Qué grupo está por encima de la media de estudiantes?* -> df$estudio: Mates Mean:4.215 
+```
+
+
+
+*2. ¿En qué grupo observamos más variación de notas? Justifica tu respuesta*
+```{r}
+by(df, df$estudio, FUN = var)
+# df$estudio: Mates
+#        estudio     nota
+#estudio      NA       NA
+#nota         NA 4.819063
+aggregate(nota~estudio, data = df, FUN=var)
+# Mates	4.819062	
+```
+
+*3. ¿Hay mucha diferencia entre el grupo que has respondido en el ejercicio 1 y en el ejercicio 2? Intenta dar una explicación objetiva del suceso*
+el grupo de mate  coinciden en las dos preguntas
+
+
+
+
+*4. Dibuja en un único gráfico los cuatro diagramas de caja, uno para cada grupo. Añade así mismo la nota media, pon nombre, título y color al gráfico para documentar el gráfico correctamente.*
+```{r}
+boxplot(nota~estudio, data = df,
+        col = c("cyan","cyan3","cyan4",'green'),
+        ylab= 'NOTAS',
+        xlab='ESTUDIANTES')
+```
+
+
+*5. ¿Observas algunos valores atípicos en el boxplot anterior? ¿A qué grupo pertence?*
+
+### Los grupos de industriales, informativa y telematica tienes el mismo rango medio de datos
+
+
+*6. Indica a partir del boxplot anterior en qué grupo observamos más variedad de notas.*
+
+### el de "mates"
+
+*7. En base a todo lo anterior, ¿puedes afirmar de forma estadística que el examen de carrera ha ido mejor en algún estudio que en los demás?*
+
+### el grupo de mates tiene la nota media mas alta que todos el resto del grupo

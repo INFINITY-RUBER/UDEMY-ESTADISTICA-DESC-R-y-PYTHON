@@ -13,7 +13,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, comment = NA)
 ```
-
+  
 # Descripción de datos cuantitativos
 
 ## Datos cuantitativos
@@ -377,7 +377,7 @@ Desviación típica | `sd(x)*sqrt((length(x)-1)/length(x))`
 dados2
 diff(range(dados2))
 IQR(dados2)
-var(dados2)
+var(dados2) #Varianza muestral
 ```
 
 ## Ejemplo 4
@@ -410,7 +410,7 @@ Si nos interesase comparar numéricamente los pesos y las anchuras de los cangre
 </div>
 
 ```{r}
-summary(subset(cangrejos, color == 3,c("weight","width")))
+summary(subset(cangrejos, color == 3,c("weight","width"))) # peso y anchora
 
 ```
 
@@ -558,7 +558,8 @@ Aparte, la función `boxplot()` dispone de algunos parámetros específicos, de 
 
 ```{r}
 boxplot(Sepal.Width~Species, data = iris, ylab = "Anchura del sétalo (cm)",
-        notch = TRUE, col = c("cyan","cyan2","cyan4"),
+        notch = TRUE, 
+        col = c("cyan","cyan2","cyan4"),
         main = "Boxplot de iris")
 ```
 
@@ -571,7 +572,8 @@ Si quisiéramos marcar de alguna forma en un diagrama de caja, cosa que puede se
 ```{r, fig.height=3.5}
 boxplot(Sepal.Width~Species, data = iris, ylab = "Anchura del sétalo (cm)")
 medias = aggregate(Sepal.Width~Species, data = iris, FUN = mean)
-points(medias, col = "pink", pch = 15)
+medias
+points(medias, col = "pink", pch = 20)
 ```
 
 ## Ejemplo 10
