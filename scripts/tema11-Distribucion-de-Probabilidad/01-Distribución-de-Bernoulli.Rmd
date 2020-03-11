@@ -26,6 +26,7 @@ pbern(1, prob = 0.7)
 qbern(0.5, prob = 0.7)
 qbern(0.25, prob = 0.7)
 rbern(100, prob = 0.7) -> data
+data
 hist(data)
 ```
 
