@@ -52,10 +52,10 @@ ax.legend(loc = 'best')
 plt.show()
 
 
-fig, ax = plt.subplots(1,1)
-prob = geom.cdf(x,p)
-ax.plot(x, prob, 'bo', ms = 8, label = "Función de distribución acumulada")
-plt.show()
+  fig, ax = plt.subplots(1,1)
+  prob = geom.cdf(x,p)
+  ax.plot(x, prob, 'bo', ms = 8, label = "Función de distribución acumulada")
+  plt.show()
 
 fig, ax = plt.subplots(1,1)
 r = geom.rvs(p, size = 10000)

@@ -9,10 +9,12 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Función de densidad
+## Función de densidad Binomial
 Sea $X = B(n = 30, p = 0.6)$,
 
 TODO: escribir la FDens y la FDistr
+
+$$X\sim \text{B}(n,p)$$
 
 ## En `R`
 
@@ -20,10 +22,11 @@ TODO: escribir la FDens y la FDistr
 library(Rlab)
 n = 30
 p = 0.6
+
 plot(0:n, dbinom(0:n, size = n, prob = p))
 plot(0:n, pbinom(0:n, size = n, prob = p))
-qbinom(0.5, n, p)
-qbinom(0.25, n, p)
+qbinom(0.5, n, p)# 50%
+qbinom(0.25, n, p) # 25 %
 hist(rbinom(100000, n, p), breaks = 0:30)
 ```
 
