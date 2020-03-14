@@ -1,0 +1,81 @@
+---
+title: "Taller clase 11"
+author: "Ruber"
+date: "12/3/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+La cantidad de tiempo (en horas) utilizada para completar un producto determinado sigue una distribución N(10, 2) . Calculad la probabilidad de que se tarde:
+a) Menos de 6 horas
+
+$X\sim N(10,2)$,  para calcular los valores de probabilidad por
+
+medio de las tablas es necesario estandarizar los valores de estudio ( 6,7, y 13)
+
+$$Z= \dfrac {X-\mu}{\sigma}  $$
+
+Para el valor de 6 es $Z= \dfrac {6-10}{2}  $ 
+```{r}
+z = (6 - 10)/2 
+z
+```
+Para el valor de 7 es $Z= \dfrac {7-10}{2}  $ 
+```{r}
+z = (7 - 10)/2 
+z
+```
+Para el valor de 13 es $Z= \dfrac {13-10}{2}  $ 
+```{r}
+z = (13 - 10)/2 
+z
+```
+a) La probabilidad de -2 segun la tabla es 0,0228. Por lo tanto,la probabilidad de que se tarde menos de 6 horas es 2.28%
+
+b)La probabilidad de -1.5 es 0.0668 y la de 1.5 es 0.9332. Por lo tanto, la probabilidad de que se tarde entre 7 y 13 horas es (0.9332 - 0.0668 = 0.8664)    86.64%
+```{r}
+P =  (0.9332 - 0.0668)*100
+P
+```
+
+```{python}
+from scipy.stats import norm
+
+n1=norm(10,2)
+
+# - a) Menos de 6 horas
+a = (round((n1.cdf(6)*100),2))
+print("Menos de 6 horas: %f"%a , "%")
+
+#  - b) Entre 7 y 13 horas
+b = round(((n1.cdf(13)-n1.cdf(7))*100),2)
+print("Entre 7 y 13 horas: %f"%b , "%")
+
+```
+2 El valor (en millones) de las ventas anuales realizadas en la Discográfica "Hasta quedarnos sin tímpanos" sigue un modelo normal de media igual a 200 y desviación tíıpica igual a 40.
+
+a) Calcula la probabilidad de que el número de ventas sea exactamente igual a 200 (millones)
+
+b) Calcula la probabilidad de que el número de ventas sea mayor que 250 (millones)
+
+c) Calcula la probabilidad de que el número de ventas sea menor o igual que 100 (millones)
+
+Estandarizad y luego calculad la probabilidad requerida mediante las tablas y comprobad vuestro resultado en R (o Python)
+
+$X\sim N(200,40)$
+
+Para el valor de 200 es $Z= \dfrac {250-200}{40}  
+```{r}
+z = (250 -200 )/40
+z
+  ```
+
+$ entonce Z= 1.25
+
+Para el valor de 100 es $Z= \dfrac {100-200}{40}  $ entonce Z= -2.5
+
+```{r}
+
+```

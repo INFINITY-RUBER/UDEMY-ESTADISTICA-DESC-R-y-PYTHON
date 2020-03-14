@@ -20,10 +20,10 @@ library(Rlab)
 M = 7
 N = 13
 k = 12
-dhyper(x = 0:12, m = M, n = N, k = k)
-phyper(q = 0:12, m = M, n = N, k = k)
-qhyper(p = 0.5, m = M, n = N, k = k)
-rhyper(nn = 1000, m = M, n = N, k = k) -> data
+dhyper(x = 0:12, m = M, n = N, k = k) # probabilidad de sacar perros en cada intento
+phyper(q = 0:12, m = M, n = N, k = k) # funcion de distribucion acumulada
+qhyper(p = 0.5, m = M, n = N, k = k)# Los cuartiles
+rhyper(nn = 1000, m = M, n = N, k = k) -> data # numero de perros de esas extracuiones
 hist(data, breaks = 8)
 ```
 
@@ -34,16 +34,16 @@ from scipy.stats import hypergeom
 import matplotlib.pyplot as plt
 import numpy as np
 
-[M, n, N] = [20, 7, 6]
-rv = hypergeom(M, n, N)
-x = np.arange(0, n+1)
-y = rv.pmf(x)
+  [M, n, N] = [20, 7, 6]
+  rv = hypergeom(M, n, N)
+  x = np.arange(0, n+1)
+  y = rv.pmf(x)
 
-mean, var, skew, kurt = rv.stats(moments = 'mvsk')
-print("Media %f"%mean)
-print("Varianza %f"%var)
-print("Sesgo %f"%skew)
-print("Curtosis %f"%kurt)
+  mean, var, skew, kurt = rv.stats(moments = 'mvsk')
+  print("Media %f"%mean)
+  print("Varianza %f"%var)
+  print("Sesgo %f"%skew)
+  print("Curtosis %f"%kurt)
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
