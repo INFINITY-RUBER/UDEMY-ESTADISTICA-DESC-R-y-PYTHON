@@ -66,16 +66,155 @@ Estandarizad y luego calculad la probabilidad requerida mediante las tablas y co
 
 $X\sim N(200,40)$
 
-Para el valor de 200 es $Z= \dfrac {250-200}{40}  
+Para el valor de 200 es $Z= \dfrac {250-200}{40}  $ entonce Z= 1.25
 ```{r}
 z = (250 -200 )/40
 z
-  ```
-
-$ entonce Z= 1.25
-
+```
 Para el valor de 100 es $Z= \dfrac {100-200}{40}  $ entonce Z= -2.5
 
 ```{r}
+z = (100 -200 )/40
+z
+```
+a) La probabilidad de que el número de ventas sea exactamente igual a 200 (millones) es Cero por que en una variable continua $ p (X=x)= 0$ 
+
+b) 
+-La probabilidad de 1.25 segun la tabla es 0.8944
+la Probabilidad > 250 millones  =  10.56 %
+```{r}
+b = (1 - 0.8944)*100
+b
+```
+c) La probabilidad de -2.5 segun la tabla es 0.0062. Por lo tanto, la probabilidad de que el número de ventas sea menor o igual que 100 (millones) es 0.62%
+
+```{python}
+from scipy.stats import norm
+n2=norm(200,40)
+#- a) Calcula la probabilidad de que el número de ventas sea exactamente igual a 200 (millones)
+#  es Cero por que en una variable continua  𝑝(𝑋=𝑥)=0
+
+#- b) Calcula la probabilidad de que el número de ventas sea mayor que 250 (millones)
+b = round(((1 - n2.cdf(250))*100),2)
+print("Probabilidad > 250 (millones): %f" %b, "%")
+
+#- c) Calcula la probabilidad de que el número de ventas sea menor o igual que 100 (millones)
+c = round((n2.cdf(100)*100),2)
+print("Probabilidad >= 100 (millones): %f" %c, "%")
+```
+
+
+3 Las puntuaciones obtenidas en un examen tipo test realizado a un grupo de opositores se distribuyen normalmente con media 50 y desviación típica 6.5. Calculad
+
+$X\sim N(50,6.5)$
+
+
+a) Probabilidad de tener una puntuación menor a 23 puntos.
+
+  Para el valor de 23 es $Z= \dfrac {23-50}{6.5}  $ entonce Z= -4.15
+```{r}
+Z_a = (23 - 50)/6.5
+Z_a
+```
+      La probabilidad de -4.15 segun la tabla es 0. por lo tanto, la probabilidad de tener una puntuación menor a 23 puntos es 0.0%
+
+b) Probabilidad de tener entre 27.3 y 43.1 puntos
+  Para el valor de 27.3 es $Z= \dfrac  {27.3-50}{6.5} $ entonce Z= -3.49
+  
+```{r}
+Z_b = (27.3 - 50) / 6.5
+Z_b
+```
+    Para el valor de 43.1 es $Z= \dfrac  {43.1-50}{6.5} $ entonce Z= -1.06
+```{r}
+Z_a = (43.1 - 50) / 6.5
+Z_a
+```
+    
+    La probabilidad de -3.49 es 0.0002  y la de -1.06 es 0.1446. 
+```{r}
+Z_b = (0.1446 - 0.0002)
+Z_b*100
+```
+    
+    
+    la probabilidad de de tener entre 27.3 y 43.1 = 14.44%
+    
+    
+c) Probabilidad de tener más de 62 puntos
+
+   Para el valor de 62 es $Z= \dfrac  {62-50}{6.5} $ entonce Z= 1.85
+```{r}
+Z= (62 - 50) / 6.5
+Z
+```
+    La probabilidad de 1.85 segun la tabla es 0.9678. 
+    Por lo tanto, la probabilidad de tener más de 62 puntos es: 
+```{r}
+c = (1 - 0.9678)
+c*100
 
 ```
+      la probabilidad de tener más de 62 puntos es:  3.22%
+    
+
+d) Probabilidad de tener 3.2 puntos o menos
+    Para el valor de 3.2 es $Z= \dfrac  {3.2-50}{6.5} $ entonce Z= -7.20
+```{r}
+Z_d = (3.2 - 50) / 6.5
+Z_d
+```
+    La probabilidad de -7.20 segun la tabla es 0.00. Por lo tanto, 
+    la probabilidad de tener 3.2 puntos o menos es del 0%
+
+e) Hallad el número de puntos que se deben obtener para que la probabilidad de sacar menos de esa cantidad de puntos sea de 0.045
+
+    La probailidad de 0.045 es aproximadamente  igual al valor -1.69 de la tabla estandar,
+    convirtiendo al valor real 
+  $p \cdot \sigma + \mu$ 
+```{r}
+((-1.69 * 6.5) + 50)
+```
+      Por lo tanto, los puntos que deden tener deben ser igual o menor que 39.0 
+
+
+f) Repetid el apartado anterior, pero esta vez para obtener una probabilidad de 0.45
+
+    La probailidad de 0.45 es aproximadamente  igual al valor -0.12 de la tabla estandar, convirtiendo al valor real:
+```{r}
+((-0.12*6.5)+50)
+```
+    
+    . Por lo tanto, los puntos que seden tener deben ser igual o menor que 49.2
+    
+```{python}
+from scipy.stats import norm
+n3=norm(50,6.5)
+
+# a) Probabilidad de tener una puntuación menor a 23 puntos.
+a = round(((n3.cdf(23))*100),2)
+print("Probabilidad de puntuación < 23: %f" %a, "%")
+
+# b) La probabilidad de tener entre 27.3 y 43.1 puntos es 
+b = round((n3.cdf(43.1) - n3.cdf(27.3))*100,2)
+print("Probabilidad de tener entre 27.3 y 43.1 puntos: %f" %b, "%")
+
+# c) La probabilidad de  tener más de 62 puntos es
+c = round(((1 - n3.cdf(62))*100),2)
+print("Probabilidad de tener más de 62 puntos: %f" %c, "%")
+
+# d) La probabilidad de tener 3.2 puntos o menos  es
+d = round((n3.cdf(3.2)*100),2)
+print("Probabilidad de tener 3.2 puntos o menos : %f" %d, "%")
+
+# f) Hallad el número de puntos que se deben obtener para que la probabilidad de sacar menos de esa cantidad de puntos sea de 0.045
+f = round(n3.ppf(0.045),1)
+print("el número de puntos < 0.045 : %f" %f)
+
+# e) el número de puntos que se deben obtener para que la probabilidad de sacar menos una probabilidad de 0.45
+e = round(n3.ppf(0.45),1)
+print("el número de puntos > 0.45 : %f" %e)
+```
+
+
+

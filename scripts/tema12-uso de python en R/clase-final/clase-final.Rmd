@@ -1,0 +1,222 @@
+---
+title: "clase-final-Señor de los anillos"
+author: "Ruber"
+date: "22/3/2020"
+output: html_document
+---
+
+<center><img
+src="https://i.imgur.com/JgaAf3w.jpg">
+</center>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+# **Introduction**
+
+Hi! In this kernel we are going to analyze two awesome data sets related to The Lord of the Rings: one containing the scripts from the movies, and the other one with information about the characters of the trilogy (gender, height, race, etc.). 
+The analysis is going to be similar to the Star Wars kernel ([Analyzing Star Wars Movie Scripts](https://www.kaggle.com/xvivancos/analyzing-star-wars-movie-scripts)), but improved with new insights and visualizations. 
+I've always liked the Lord of the Rings, so I'm keen to make this kernel. Let's start!
+
+Some text mining resources I have used as reference in this kernel:
+
+* [Tidy Sentiment Analysis in R](https://www.datacamp.com/community/tutorials/sentiment-analysis-R)
+
+* [Text Mining with R](https://www.tidytextmining.com/)
+
+**NOTES**
+
+* The wordclouds are not produced by the code because I've had problems with the `wordcloud2()` function in Kaggle. In order to solve it, I have produced and exported the images from RStudio and I have published them in [Imgur](https://imgur.com/), using the URLs in this kernel.
+
+* I know that the images I include in the graphics aren't very useful, and they can also distract the reader's attention from what is really important. However, I really wanted to mix visualizations with images to prove and learn new things. In the future I would like to try with GIFs. 
+
+# **Loading Data** {.tabset .tabset-fade .tabset-pills}
+
+First we need to load some libraries and read the movie scripts. 
+
+```{r message=FALSE, warning=FALSE}
+# Load libraries
+library(tidyverse)
+library(tm)
+library(wordcloud)
+library(wordcloud2)
+library(reshape2)
+library(RWeka)
+library(knitr)
+library(gridExtra)
+library(grid)
+library(magick)
+library(memery)
+library(ggimage)
+library(igraph)
+library(ggraph)
+library(tidytext)
+
+# Read the data 
+scripts <- read.csv("./lotr_scripts.csv", sep=",")
+```
+
+Let's get an idea of what we're working with. One column describes the character name and the other column is a specific sentence from the entire Lord of the Rings dialog.
+
+## First 10 rows 
+```{r}
+# First 10 rows 
+kable(head(scripts))
+```
+
+## Last 10 rows 
+```{r}
+# Last 10 rows 
+kable(tail(scripts))
+```
+
+## Summary 
+```{r}
+# Summary
+kable(summary(scripts))
+```
+## Structure
+```{r}
+# Structure 
+str(scripts)
+```
+# **Functions**
+
+In this section we are going to define functions to carry out some text mining tasks. The first function performs cleaning and preprocessing steps to a corpus:
+
+* `removePunctuation()`. Remove all punctuation marks
+* `stripWhitespace()`. Remove excess whitespace
+* `tolower()`. Make all characters lowercase
+* `removeWords()`. Remove some common English stop words ("I", "she'll", "the", etc.)
+* `removeNumbers()`. Remove numbers 
+
+```{r}
+# Text transformations
+cleanCorpus <- function(corpus){
+
+  corpus.tmp <- tm_map(corpus, removePunctuation)
+  corpus.tmp <- tm_map(corpus.tmp, stripWhitespace)
+  corpus.tmp <- tm_map(corpus.tmp, content_transformer(tolower))
+  v_stopwords <- c(stopwords("english"), c("thats","weve","hes","theres","ive","im",
+                                           "will","can","cant","dont","youve","us",
+                                           "youre","youll","theyre","whats","didnt"))
+  corpus.tmp <- tm_map(corpus.tmp, removeWords, v_stopwords)
+  corpus.tmp <- tm_map(corpus.tmp, removeNumbers)
+  return(corpus.tmp)
+
+}
+```
+The second function constructs the term-document matrix, that describes the frequency of terms that occur in a collection of documents. This matrix has terms in the first column and documents across the top as individual column names.
+```{r}
+# Most frequent terms 
+frequentTerms <- function(text){
+
+  s.cor <- VCorpus(VectorSource(text))
+  s.cor.cl <- cleanCorpus(s.cor)
+  s.tdm <- TermDocumentMatrix(s.cor.cl)
+  s.tdm <- removeSparseTerms(s.tdm, 0.999)
+  m <- as.matrix(s.tdm)
+  word_freqs <- sort(rowSums(m), decreasing=TRUE)
+  dm <- data.frame(word=names(word_freqs), freq=word_freqs)
+  return(dm)
+
+}
+```
+The next functions extract bigrams and trigams using the `NGramTokenizer()` function from the package `RWeka`. 
+
+```{r}
+# Define bigram tokenizer 
+tokenizer2  <- function(x){
+
+  NGramTokenizer(x, Weka_control(min=2, max=2))
+
+}
+# Define trigram tokenizer 
+tokenizer3  <- function(x){
+
+  NGramTokenizer(x, Weka_control(min=3, max=3))
+
+}
+
+# Most frequent bigrams 
+frequentBigrams <- function(text){
+
+  s.cor <- VCorpus(VectorSource(text))
+  s.cor.cl <- cleanCorpus(s.cor)
+  s.tdm <- TermDocumentMatrix(s.cor.cl, control=list(tokenize=tokenizer2))
+  s.tdm <- removeSparseTerms(s.tdm, 0.999)
+  m <- as.matrix(s.tdm)
+  word_freqs <- sort(rowSums(m), decreasing=TRUE)
+  dm <- data.frame(word=names(word_freqs), freq=word_freqs)
+  return(dm)
+
+}
+
+# Most frequent trigrams 
+frequentTrigrams <- function(text){
+
+  s.cor <- VCorpus(VectorSource(text))
+  s.cor.cl <- cleanCorpus(s.cor)
+  s.tdm <- TermDocumentMatrix(s.cor.cl, control=list(tokenize=tokenizer3))
+  s.tdm <- removeSparseTerms(s.tdm, 0.999)
+  m <- as.matrix(s.tdm)
+  word_freqs <- sort(rowSums(m), decreasing=TRUE)
+  dm <- data.frame(word=names(word_freqs), freq=word_freqs)
+  return(dm)
+
+}
+```
+# **Data Analysis**
+
+## Dialogues 
+
+What are the characters with the most lines of dialogue of the trilogy? Let's plot some bar charts to discover it. 
+```{r fig.align='center'}
+# Top 15 characters with more dialogues (absolute values)
+scripts %>% 
+  count(char) %>%
+  arrange(desc(n)) %>%
+  slice(1:15) %>%
+  ggplot(aes(x=reorder(char, n), y=n)) +
+  geom_bar(stat="identity", aes(fill=n), show.legend=FALSE) + 
+  geom_label(aes(label=n)) +
+  scale_fill_gradient(low="paleturquoise", high="paleturquoise4") +
+  labs(x="Character", y="Lines of dialogue",
+       title="Lines of dialogue per character (absolute values)") +  
+  coord_flip() +
+  theme_bw()
+ 
+# Image in the visualization 
+image <- image_read("../input/the-lord-of-the-rings-figures/gollum.gif") 
+grid.raster(image, x=0.9, y=0.25, height=0.25)
+```
+<div style="text-align: right"> **Reference**: https://www.deviantart.com/jinndev/art/Gollum-340203110 </div>
+
+It seems that the ring bearer and his best friend are the most talkative characters. We can do the same graph using the relative values instead of the absolutes, comparing to the total lines of dialogue (2.390). 
+```{r fig.align='center'}
+# Top 15 characters with more dialogues (relative values)
+scripts %>% 
+  count(char) %>%
+  arrange(desc(n)) %>%
+  slice(1:15) %>%
+  mutate(Percentage=n/nrow(scripts)) %>%
+  ggplot(aes(x=reorder(char, Percentage), y=Percentage)) +
+  geom_bar(stat="identity", aes(fill=Percentage), show.legend=FALSE) + 
+  geom_label(aes(label=paste0(round(Percentage*100, 2), "%"))) +
+  scale_y_continuous(labels=scales::percent) +
+  scale_fill_gradient(low="paleturquoise", high="paleturquoise4") +
+  labs(x="Character", y="Lines of dialogue (%)", 
+       title="Lines of dialogue per character (relative values)") + 
+  coord_flip() +
+  theme_bw()
+
+# Image in the visualization 
+image <- image_read("./unnamed-chunk-15-1.pngsauron.png") 
+grid.raster(image, x=0.85, y=0.26, height=0.34)
+```
+
+
+
+
+
